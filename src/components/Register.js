@@ -56,10 +56,10 @@ const Register = () => {
          <p ref={errRef} className={errMssg ? 'errmsg' : 'offscreen'} 
          aria-live = 'assertive'> {errMssg} </p>
          <h1>Register</h1>
+
          <label htmlFor="username">
             Username:
          </label>
-
          <input 
             type = 'text'
             id = "username"
@@ -72,6 +72,9 @@ const Register = () => {
             onFocus = {() => setUserFocus(true)}
             onBlur = {() => setUserFocus(false)}
          />
+         <p id="uidnote" >
+
+         </p>
       </section>
    )
 }
