@@ -1,4 +1,4 @@
-// import './App.css'
+import './index.css'
 import Register from './components/Register';
 
 function App() {
