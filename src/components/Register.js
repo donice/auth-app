@@ -62,30 +62,42 @@ const Register = () => {
       setErrMsg('')
    }, [user, email, password])
 
+
+   // handleSubmit function
    const handleSubmit = async (e) => {
       e.preventDefault();
 
       // to prevent javascript from being hacked
       const v1 = USER_REGEX.test(user)
-      const v2 = PASSWORD_REGEX.test(password)
-      if (!v1 || !v2) {
+      const v2 = EMAIL_REGEX.test(email)
+      const v3 = PASSWORD_REGEX.test(password)
+      if (!v1 || !v2 || !v3) {
          setErrMsg('inavlid Entry');
          return;
       }
       // .......................................
-      
-      try {
-         const response = await axios.post(REGISTER_URL,
-            JSON.stringify({ user, pwd: password }),
-            {
-               headers: { 'Content-Type': 'application/json' },
-               withCredentials: true
-            }
-         );
-         console.log(response.data)
-         console.log(JSON.stringify(response))
-         setSucess(true);
-      } catch (err) {
+
+      try{
+         fetch(`axios${REGISTER_URL}`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: user,           
+              email,
+              password,
+            })
+         }).then(function(response) {
+            return response.json();
+         }).then(setErrMsg('No server Response'))
+      }
+
+      catch(err) {
+         if(err) {
+            console.log(err)
+         }
          if (!err?.response) {
             setErrMsg('No server Response')
          } else if (err.response?.status === 402) {
@@ -225,4 +237,27 @@ const Register = () => {
 
 export default Register;
 
-
+   // try {
+   //       const response = await axios.post(REGISTER_URL,
+   //          JSON.stringify({ name: user, email, password }),
+   //          {
+   //             headers: { 'Content-Type': 'application/json' },
+   //             withCredentials: true
+   //          }
+   //       );
+   //       console.log(response.data)
+   //       console.log(JSON.stringify(response))
+   //       setSucess(true);
+   //    } catch (err) {
+         // if(err) {
+         //    console.log(err)
+         // }
+         // if (!err?.response) {
+         //    setErrMsg('No server Response')
+         // } else if (err.response?.status === 402) {
+         //    setErrMsg('Username Taken')
+         // } else {
+         //    setErrMsg('Registration Failed')
+         // }
+         // errRef.current.focus()
+   //    }

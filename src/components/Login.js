@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function Login() {
   const [name, setName] = useState("");
@@ -6,12 +6,12 @@ function Login() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-      let url = 'https://unopass-api.herokuapp.com/user/'
-      fetch(url)
-      .then(res => res.json())
-      .then(data => console.log(data))
-  }, [])
+  // useEffect(() => {
+  //     let url = 'https://unopass-api.herokuapp.com/user/'
+  //     fetch(url)
+  //     .then(res => res.json())
+  //     .then(data => console.log(data))
+  // }, [])
 
   let handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +27,7 @@ function Login() {
 
       let resJson = await res.json();
       console.log(resJson, 'hello world')
+      console.log(name, email, password)
       
       if (res.status === 200) {
          setName("");
